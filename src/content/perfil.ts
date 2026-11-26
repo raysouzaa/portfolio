@@ -43,7 +43,7 @@ export const perfil = {
   ],
 
   // Foto: coloque o arquivo em /public (ex.: /public/foto.jpg) e troque null por "/foto.jpg"
-  foto: null as string | null,
+  foto: "/foto.webp" as string | null,
 
   // Contato
   email: "raydesouza52@gmail.com",
