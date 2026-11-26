@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfólio
 
-## Getting Started
+Site pessoal em Next.js 16 (App Router), Tailwind CSS 4 e Motion.
+Identidade visual "Encontro das águas": duas correntes que correm lado a lado sem se misturar.
 
-First, run the development server:
+## Onde editar
+
+Todo o conteúdo fica em **`src/content/perfil.ts`**: nome, textos, projetos, experiências, formação, ferramentas e contatos.
+Procure por `PREENCHER` para ver o que ainda falta.
+
+- **Foto:** coloque o arquivo em `public/` (ex.: `public/foto.jpg`) e defina `foto: "/foto.jpg"`.
+- **GitHub:** preencha `github: "seu-usuario"`. Os repositórios públicos aparecem sozinhos (sem forks e arquivados) e são atualizados a cada hora. Use `githubOcultar` para esconder algum.
+- **Projetos:** cada item do array `projetos` vira uma aba na seção Projetos. `link` é opcional.
+
+## Rodar localmente
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Publicar no servidor (Docker)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+docker compose up -d --build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O site sobe na porta 3000. Coloque o seu proxy reverso (Nginx, Traefik ou túnel Cloudflare) apontando para ela.
 
-## Learn More
+Opcional: defina `GITHUB_TOKEN` (um token sem nenhuma permissão já basta) num arquivo `.env` ao lado do `docker-compose.yml`
+para não esbarrar no limite de 60 requisições/hora da API do GitHub.
 
-To learn more about Next.js, take a look at the following resources:
+### Sem Docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm ci
+npm run build
+cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/
+PORT=3000 node .next/standalone/server.js
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Estrutura
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  app/
+    layout.tsx        metadados e fonte
+    page.tsx          todas as seções
+    globals.css       paleta e tipografia
+  components/
+    Correntes.tsx     canvas animado do topo (respeita "reduzir movimento")
+    Hero.tsx          abertura
+    Projetos.tsx      seletor de projetos (mouse e teclado)
+    Repositorios.tsx  repositórios do GitHub
+    Navegacao.tsx, CopiarEmail.tsx, Grafismo.tsx
+  content/
+    perfil.ts         << todo o conteúdo
+```
