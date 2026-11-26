@@ -60,7 +60,7 @@ export const perfil = {
 
 // SEO: como o site aparece no Google e quando o link é compartilhado
 export const seo = {
-  url: "https://portifolio.vyrasolutions.com.br",
+  url: "https://meu-portifolio.vyrasolutions.com.br",
   titulo: "Raiany Souza | Desenvolvedora Full Stack e DBA em Belém, PA",
   descricao:
     "Raiany Souza é desenvolvedora full stack e DBA em Belém do Pará. Cria sistemas web com React, Laravel e FastAPI, administra Oracle, PostgreSQL e MongoDB e integra sistemas hospitalares.",

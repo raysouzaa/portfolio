@@ -3,11 +3,11 @@
 Mesmo esquema do glam-financas-mais. O site roda num contêiner que escuta só em `127.0.0.1:3010`, e o Caddy do servidor cuida do domínio e do HTTPS.
 
 - Pasta no servidor: `/var/www/html/portifolio`
-- Endereço: `https://portifolio.vyrasolutions.com.br`
+- Endereço: `https://meu-portifolio.vyrasolutions.com.br`
 
 ## Primeira publicação
 
-1. **DNS:** registro A `portifolio` apontando para o IP do servidor (igual ao `glamfinancasmais`).
+1. **DNS:** registro A `meu-portifolio` apontando para o IP do servidor, como DNS only (igual ao `glamfinancasmais`).
 2. **Código e contêiner:**
    ```bash
    git clone https://github.com/raysouzaa/portifolio.git /var/www/html/portifolio
@@ -17,9 +17,14 @@ Mesmo esquema do glam-financas-mais. O site roda num contêiner que escuta só e
    ```
 3. **Caddy:** acrescente ao `/etc/caddy/Caddyfile`
    ```
-   portifolio.vyrasolutions.com.br {
+   meu-portifolio.vyrasolutions.com.br {
        encode gzip zstd
        reverse_proxy 127.0.0.1:3010
+   }
+
+   # endereço antigo: redireciona para o novo sem perder links
+   portifolio.vyrasolutions.com.br {
+       redir https://meu-portifolio.vyrasolutions.com.br{uri} permanent
    }
    ```
    ```bash
