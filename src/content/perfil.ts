@@ -58,6 +58,37 @@ export const perfil = {
   rodape: "Desenvolvido por RS Solutions – Belém, PA, Brasil",
 };
 
+// SEO: como o site aparece no Google e quando o link é compartilhado
+export const seo = {
+  url: "https://portifolio.vyrasolutions.com.br",
+  titulo: "Raiany Souza | Desenvolvedora Full Stack e DBA em Belém, PA",
+  descricao:
+    "Raiany Souza é desenvolvedora full stack e DBA em Belém do Pará. Cria sistemas web com React, Laravel e FastAPI, administra Oracle, PostgreSQL e MongoDB e integra sistemas hospitalares.",
+  palavrasChave: [
+    "Raiany Souza",
+    "Raiany de Souza",
+    "Ray Souza",
+    "desenvolvedora full stack",
+    "desenvolvedora full stack Belém",
+    "desenvolvedora full stack Pará",
+    "programadora Belém",
+    "desenvolvedora de sistemas Belém do Pará",
+    "DBA Belém",
+    "DBA Oracle",
+    "DBA PostgreSQL",
+    "desenvolvedora React",
+    "desenvolvedora Laravel",
+    "desenvolvedora Next.js",
+    "FastAPI",
+    "sistemas hospitalares",
+    "integração MV",
+    "sistemas para saúde",
+    "desenvolvimento de sistemas sob medida",
+    "freelancer desenvolvimento web Belém",
+    "Santa Casa do Pará",
+  ],
+};
+
 export const linkWhatsapp = perfil.whatsapp
   ? `https://wa.me/${perfil.whatsapp}?text=${encodeURIComponent(perfil.mensagemWhatsapp)}`
   : "";

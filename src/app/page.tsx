@@ -7,6 +7,7 @@ import Repositorios from "@/components/Repositorios";
 import CopiarEmail from "@/components/CopiarEmail";
 import Grafismo from "@/components/Grafismo";
 import BotaoFlutuante from "@/components/BotaoFlutuante";
+import DadosEstruturados from "@/components/DadosEstruturados";
 import {
   FotoRevelada,
   Grupo,
@@ -96,6 +97,7 @@ export default function Home() {
 
   return (
     <>
+      <DadosEstruturados />
       <Navegacao />
       <main>
         <Hero />
