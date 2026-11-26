@@ -126,19 +126,6 @@ export const projetos: Projeto[] = [
     link: { rotulo: "Acessar o GlamFinanças", url: "https://glamfinancasmais.vyrasolutions.com.br" },
   },
   {
-    slug: "contabilidade",
-    nome: "Plataforma de gestão contábil",
-    contexto: "Escritório de contabilidade",
-    status: "Em desenvolvimento",
-    resumo: "Sistema de gestão para um escritório de contabilidade que atende duas marcas, cada uma com sua identidade.",
-    feito: [
-      "Áreas de administração, tarefas, financeiro e comercial",
-      "Projetos unificados com publicação automática e ambiente de homologação",
-      "Migração para servidor próprio",
-    ],
-    stack: ["Laravel", "React", "TypeScript", "PostgreSQL"],
-  },
-  {
     slug: "e-commerce",
     nome: "Plataformas de e-commerce",
     contexto: "Wing Solutions",

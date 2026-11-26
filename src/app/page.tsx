@@ -124,7 +124,7 @@ export default function Home() {
         <Secao
           id="projetos"
           titulo="Projetos"
-          intro="Sistemas para hospital, escritório, e-commerce e projetos próprios. Os privados aparecem aqui por alto, sem expor nada de quem confiou o trabalho a mim."
+          intro="Sistemas para hospital, e-commerce e projetos próprios. Os privados aparecem aqui por alto, sem expor nada de quem confiou o trabalho a mim."
         >
           <Projetos />
         </Secao>
