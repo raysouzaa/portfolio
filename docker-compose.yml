@@ -8,5 +8,9 @@ services:
     restart: unless-stopped
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+    # Só o proxy reverso do próprio servidor (Caddy) alcança o site.
+    # A 3010 evita conflito com a 8088 do glam-financas-mais.
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3010:3000"
+    # Teto de memória: o servidor é compartilhado com outros projetos.
+    mem_limit: 256m
