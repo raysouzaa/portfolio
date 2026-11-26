@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { IconeCopiar, IconeOk } from "./Icones";
 
 export default function CopiarEmail({ email }: { email: string }) {
   const [copiado, setCopiado] = useState(false);
@@ -19,8 +20,9 @@ export default function CopiarEmail({ email }: { email: string }) {
     <button
       type="button"
       onClick={copiar}
-      className="rounded-full border border-nevoa/25 px-5 py-2.5 text-sm font-semibold text-nevoa transition-colors hover:border-nevoa hover:bg-nevoa/5"
+      className="inline-flex items-center gap-2 rounded-full border border-nevoa/25 px-5 py-2.5 text-sm font-semibold text-nevoa transition-colors hover:border-nevoa hover:bg-nevoa/5"
     >
+      {copiado ? <IconeOk className="size-4 text-sedimento-claro" /> : <IconeCopiar className="size-4" />}
       <span aria-live="polite">{copiado ? "E-mail copiado" : "Copiar e-mail"}</span>
     </button>
   );

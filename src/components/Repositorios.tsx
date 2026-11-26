@@ -1,5 +1,6 @@
 import { cacheLife } from "next/cache";
 import { perfil } from "@/content/perfil";
+import { Grupo, Item } from "./Animacoes";
 
 type Repo = {
   name: string;
@@ -67,9 +68,10 @@ export default async function Repositorios() {
 
   return (
     <div>
-      <ul className="grid border-t border-margem md:grid-cols-2">
+      <Grupo as="ul" intervalo={0.06} className="grid border-t border-margem md:grid-cols-2">
         {repos.map((r, i) => (
-          <li
+          <Item
+            as="li"
             key={r.name}
             className={`border-b border-margem ${i % 2 === 0 ? "md:border-r md:pr-8" : "md:pl-8"}`}
           >
@@ -101,9 +103,9 @@ export default async function Repositorios() {
                 <span>Atualizado em {formatarData(r.pushed_at)}</span>
               </span>
             </a>
-          </li>
+          </Item>
         ))}
-      </ul>
+      </Grupo>
       <a
         href={`https://github.com/${perfil.github}`}
         target="_blank"

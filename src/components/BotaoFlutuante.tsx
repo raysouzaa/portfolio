@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { linkWhatsapp } from "@/content/perfil";
+import { IconeWhatsapp } from "./Icones";
 
 /** "Fale comigo" fixo no canto. Some no topo da página e quando a seção de contato está na tela. */
 export default function BotaoFlutuante() {
@@ -39,15 +40,7 @@ export default function BotaoFlutuante() {
         visivel ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M4 12a8 8 0 1 1 3.3 6.48L4 19.5l1.02-3.2A7.96 7.96 0 0 1 4 12Z"
-          stroke="currentColor"
-          strokeWidth="1.9"
-          strokeLinejoin="round"
-        />
-        <path d="M9 10.5h6M9 13.5h4" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
-      </svg>
+      {linkWhatsapp && <IconeWhatsapp className="size-5" />}
       Fale comigo
     </a>
   );

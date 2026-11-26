@@ -1,10 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { projetos } from "@/content/perfil";
 
 export default function Projetos() {
   const trilho = useRef<HTMLUListElement>(null);
+  const reduzir = useReducedMotion();
   const [atual, setAtual] = useState(0);
   const [progresso, setProgresso] = useState(0);
   const [limites, setLimites] = useState({ inicio: true, fim: false });
@@ -116,8 +118,12 @@ export default function Projetos() {
         className="ml-[calc(50%-50vw)] flex w-screen snap-x snap-mandatory gap-5 overflow-x-auto px-[max(1.5rem,calc(50vw-36rem))] pb-4 [scroll-padding-inline:max(1.5rem,calc(50vw-36rem))] [scrollbar-width:none] sm:px-[max(2.5rem,calc(50vw-36rem))] sm:[scroll-padding-inline:max(2.5rem,calc(50vw-36rem))] [&::-webkit-scrollbar]:hidden"
       >
         {projetos.map((p, i) => (
-          <li
+          <motion.li
             key={p.slug}
+            initial={reduzir ? false : { opacity: 0, x: 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+            transition={{ duration: 0.9, delay: Math.min(i, 3) * 0.1, ease: [0.16, 1, 0.3, 1] }}
             aria-roledescription="slide"
             aria-label={`${i + 1} de ${projetos.length}: ${p.nome}`}
             className="flex w-[84vw] max-w-[25rem] shrink-0 snap-start select-none flex-col rounded-xl border border-margem bg-mata/45 p-7 sm:w-[25rem] sm:p-8"
@@ -175,7 +181,7 @@ export default function Projetos() {
                 </a>
               )}
             </div>
-          </li>
+          </motion.li>
         ))}
       </ul>
 
