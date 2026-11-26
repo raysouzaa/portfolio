@@ -24,6 +24,11 @@
   --font-sans: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
+html,
+body {
+  overflow-x: clip;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;

@@ -3,24 +3,20 @@
 import { useEffect, useRef } from "react";
 
 /**
- * "Encontro das águas": duas correntes de partículas correm lado a lado
- * sem se misturar. A de cima tem a cor da água escura do Rio Negro, a de
- * baixo a do sedimento do Solimões. O cursor desvia o fluxo como um remanso.
+ * "Encontro das águas": dois feixes de linhas de correnteza correm lado a lado
+ * sem se misturar, como os rios vistos de cima. O de cima tem o tom da água
+ * escura do Rio Negro, o de baixo o do sedimento do Solimões. O cursor abre
+ * as linhas como um remanso.
  */
 
-type Particula = {
-  x: number;
-  y: number;
-  px: number;
-  py: number;
-  rio: 0 | 1;
-  vel: number;
-  vida: number;
-  fase: number;
-};
+const POR_RIO = 22;
+const PASSO = 7; // px entre pontos de cada linha
+const CORES: [number, number, number][] = [
+  [122, 176, 163], // Rio Negro
+  [200, 161, 95], // Solimões
+];
 
-const FUNDO = [15, 38, 36]; // --color-rio
-const CORES = ["rgba(122, 176, 163, ALPHA)", "rgba(200, 161, 95, ALPHA)"];
+type Linha = { rio: 0 | 1; f: number; fase: number; vel: number; amp: number; alpha: number };
 
 export default function Correntes({ className = "" }: { className?: string }) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -34,116 +30,98 @@ export default function Correntes({ className = "" }: { className?: string }) {
     const reduzir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let w = 0;
     let h = 0;
-    let dpr = 1;
-    let particulas: Particula[] = [];
     let raf = 0;
     let visivel = true;
     let t = 0;
-    const mouse = { x: -9999, y: -9999, ativo: false };
+    // posição do cursor suavizada, para o remanso não "pular"
+    const alvo = { x: -9999, y: -9999, forca: 0 };
+    const mouse = { x: -9999, y: -9999, forca: 0 };
 
-    // linha onde as duas águas se encontram
-    const encontro = (x: number, tempo: number) =>
-      h * 0.58 +
-      Math.sin(x * 0.0032 + tempo * 0.00035) * h * 0.07 +
-      Math.sin(x * 0.0081 - tempo * 0.0006) * h * 0.025;
+    const linhas: Linha[] = [];
+    for (const rio of [0, 1] as const) {
+      for (let i = 0; i < POR_RIO; i++) {
+        const f = (i + 0.5) / POR_RIO; // 0 = junto do encontro, 1 = margem
+        linhas.push({
+          rio,
+          f,
+          fase: Math.random() * Math.PI * 2,
+          vel: 0.6 + Math.random() * 0.6,
+          amp: 3 + f * 9 + Math.random() * 3,
+          alpha: 0.12 + (1 - f) * 0.42,
+        });
+      }
+    }
 
-    // largura de cada corrente diminui para a direita: os rios se apertam
-    const largura = (x: number) => h * (0.36 - 0.18 * Math.min(1, x / Math.max(w, 1)));
-
-    const nova = (rio: 0 | 1, emQualquerX = false): Particula => {
-      const x = emQualquerX ? Math.random() * w : -10 - Math.random() * 80;
-      const centro = encontro(x, t);
-      const lado = rio === 0 ? -1 : 1;
-      const y = centro + lado * (4 + Math.random() * largura(x));
-      return {
-        x,
-        y,
-        px: x,
-        py: y,
-        rio,
-        vel: 0.7 + Math.random() * 1.5,
-        vida: 0,
-        fase: Math.random() * Math.PI * 2,
-      };
-    };
+    const encontro = (x: number) =>
+      h * 0.6 + Math.sin(x * 0.0026 + t * 0.00022) * h * 0.06 + Math.sin(x * 0.0067 - t * 0.00035) * h * 0.02;
+    const largura = (x: number) => h * (0.34 - 0.16 * Math.min(1, x / Math.max(w, 1)));
 
     const montar = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const r = canvas.getBoundingClientRect();
       w = r.width;
       h = r.height;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.fillStyle = `rgb(${FUNDO.join(",")})`;
-      ctx.fillRect(0, 0, w, h);
-      const total = Math.min(1400, Math.round((w * h) / 1200));
-      particulas = Array.from({ length: total }, (_, i) => nova((i % 2) as 0 | 1, true));
     };
 
-    const passo = () => {
-      t += 16;
-      // rastro: escurece levemente o quadro anterior
-      ctx.fillStyle = `rgba(${FUNDO.join(",")}, 0.075)`;
-      ctx.fillRect(0, 0, w, h);
-      ctx.lineWidth = 1.5;
-      ctx.lineCap = "round";
+    const desenhar = () => {
+      ctx.clearRect(0, 0, w, h);
+      mouse.x += (alvo.x - mouse.x) * 0.12;
+      mouse.y += (alvo.y - mouse.y) * 0.12;
+      mouse.forca += (alvo.forca - mouse.forca) * 0.06;
+      const raio2 = 170 * 170;
 
-      for (const p of particulas) {
-        p.px = p.x;
-        p.py = p.y;
-        const centro = encontro(p.x, t);
-        const lado = p.rio === 0 ? -1 : 1;
-        // cada partícula busca sua faixa dentro do próprio rio
-        const faixa = centro + lado * (6 + ((Math.sin(p.fase) + 1) / 2) * largura(p.x));
-        let vy = (faixa - p.y) * 0.02 + Math.sin(p.x * 0.012 + p.fase + t * 0.001) * 0.35;
-        let vx = p.vel * (1 + 0.25 * Math.sin(p.y * 0.01 + t * 0.0005));
+      for (const l of linhas) {
+        const lado = l.rio === 0 ? -1 : 1;
+        const [r, g, b] = CORES[l.rio];
+        // as linhas surgem suavemente da esquerda
+        const grad = ctx.createLinearGradient(0, 0, w, 0);
+        grad.addColorStop(0, `rgba(${r},${g},${b},0)`);
+        grad.addColorStop(0.18, `rgba(${r},${g},${b},${l.alpha * 0.6})`);
+        grad.addColorStop(0.6, `rgba(${r},${g},${b},${l.alpha})`);
+        grad.addColorStop(1, `rgba(${r},${g},${b},${l.alpha * 0.85})`);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = l.f < 0.15 ? 1.4 : 1;
 
-        if (mouse.ativo) {
-          const dx = p.x - mouse.x;
-          const dy = p.y - mouse.y;
-          const d2 = dx * dx + dy * dy;
-          const raio = 150;
-          if (d2 < raio * raio) {
-            const d = Math.sqrt(d2) || 1;
-            const f = (1 - d / raio) * 2.6;
-            // remanso: empurra e gira em volta do cursor
-            vx += (dx / d) * f - (dy / d) * f * 0.8;
-            vy += (dy / d) * f + (dx / d) * f * 0.8;
-          }
-        }
-
-        p.x += vx;
-        p.y += vy;
-        p.vida++;
-
-        // a fronteira entre as águas é respeitada
-        if (p.rio === 0 && p.y > centro - 1) p.y = centro - 1;
-        if (p.rio === 1 && p.y < centro + 1) p.y = centro + 1;
-
-        const alpha = Math.min(0.8, p.vida / 50) * (0.55 + 0.45 * (p.vel / 2.2));
-        ctx.strokeStyle = CORES[p.rio].replace("ALPHA", alpha.toFixed(3));
         ctx.beginPath();
-        ctx.moveTo(p.px, p.py);
-        ctx.lineTo(p.x, p.y);
-        ctx.stroke();
+        for (let x = -PASSO; x <= w + PASSO; x += PASSO) {
+          const centro = encontro(x);
+          let y =
+            centro +
+            lado * (3 + l.f * largura(x)) +
+            Math.sin(x * (0.005 + l.f * 0.003) - t * 0.0009 * l.vel + l.fase) * l.amp;
 
-        if (p.x > w + 10 || p.y < -40 || p.y > h + 40) Object.assign(p, nova(p.rio));
+          if (mouse.forca > 0.01) {
+            const dx = x - mouse.x;
+            const dy = y - mouse.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < raio2 * 4) {
+              // desvio suave: abre as linhas para cima e para baixo do cursor
+              y += Math.tanh(dy / 40) * Math.exp(-d2 / raio2) * 46 * mouse.forca;
+            }
+          }
+          // nenhuma linha atravessa para o outro rio
+          y = lado < 0 ? Math.min(y, centro - 1) : Math.max(y, centro + 1);
+
+          if (x === -PASSO) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
       }
     };
 
     const loop = () => {
-      if (visivel && !document.hidden) passo();
+      if (visivel && !document.hidden) {
+        t += 16;
+        desenhar();
+      }
       raf = requestAnimationFrame(loop);
     };
 
-    const estatico = () => {
-      // movimento reduzido: desenha o rio já formado, sem animar
-      for (let i = 0; i < 260; i++) passo();
-    };
-
     montar();
-    if (reduzir) estatico();
+    if (reduzir) desenhar();
     else raf = requestAnimationFrame(loop);
 
     const io = new IntersectionObserver(([e]) => (visivel = e.isIntersecting));
@@ -151,17 +129,17 @@ export default function Correntes({ className = "" }: { className?: string }) {
 
     const aoMover = (e: PointerEvent) => {
       const r = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - r.left;
-      mouse.y = e.clientY - r.top;
-      mouse.ativo = mouse.y >= 0 && mouse.y <= r.height;
+      alvo.x = e.clientX - r.left;
+      alvo.y = e.clientY - r.top;
+      alvo.forca = alvo.y >= 0 && alvo.y <= r.height ? 1 : 0;
     };
-    const aoSair = () => (mouse.ativo = false);
+    const aoSair = () => (alvo.forca = 0);
     let tm: ReturnType<typeof setTimeout>;
     const aoRedimensionar = () => {
       clearTimeout(tm);
       tm = setTimeout(() => {
         montar();
-        if (reduzir) estatico();
+        if (reduzir) desenhar();
       }, 150);
     };
 

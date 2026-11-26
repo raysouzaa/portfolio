@@ -2,7 +2,6 @@
  * ============================================================
  *  TODO O CONTEÚDO DO SITE FICA AQUI.
  *  Edite este arquivo para trocar textos, projetos e experiências.
- *  Itens marcados com "PREENCHER" ainda precisam dos seus dados reais.
  * ============================================================
  */
 
@@ -11,10 +10,9 @@ export type Projeto = {
   nome: string;
   contexto: string; // onde/para quem foi feito
   status?: "Em produção" | "Em desenvolvimento";
-  resumo: string; // uma linha
-  problema: string;
-  feito: string[]; // o que você fez
-  stack: string[];
+  resumo: string;
+  feito: string[];
+  stack?: string[];
   link?: { rotulo: string; url: string };
 };
 
@@ -27,8 +25,8 @@ export type Experiencia = {
 };
 
 export const perfil = {
-  // Nome grande do topo do site
-  nome: "Raiany Souza", // cada palavra vira uma linha no topo
+  // Nome grande do topo do site (cada palavra vira uma linha)
+  nome: "Raiany Souza",
   nomeCompleto: "Raiany Souza",
   titulo: "Desenvolvedora full stack",
   cidade: "Belém do Pará",
@@ -38,232 +36,191 @@ export const perfil = {
     "Desenvolvo sistemas para a área da saúde e faço eles conversarem entre si: do banco Oracle do MV até a tela à beira do leito.",
 
   sobre: [
-    "Sou desenvolvedora full stack há mais de 7 anos. Hoje trabalho na Fundação Santa Casa de Misericórdia do Pará, onde construo os sistemas usados por enfermagem, médicos, farmácia, financeiro e banco de leite, e cuido dos bancos de dados que sustentam tudo isso.",
-    "Meu dia a dia é integração: ler o que está no prontuário e no sistema hospitalar MV, transformar em telas simples para quem está no plantão e colocar no ar com Docker. Também passei cinco anos na Wing Solutions criando APIs, landing pages e chatbots de WhatsApp, e comecei na UFPA, desenvolvendo os sistemas da Pró-reitoria de Ensino.",
+    "Sou desenvolvedora full stack com mais de 7 anos de experiência. Atualmente, atuo na Fundação Santa Casa de Misericórdia do Pará, onde desenvolvo aplicações para as áreas de enfermagem, corpo clínico, farmácia, financeiro e banco de leite humano, com stack React, Tailwind, Laravel e FastAPI. Também atuo como DBA, administrando ambientes Oracle, PostgreSQL e MongoDB: modelagem, otimização de consultas, rotinas de backup e manutenção dos servidores Linux com Docker onde os serviços rodam.",
+    "Meu foco é o desenvolvimento de soluções que otimizam os fluxos assistenciais e administrativos, integradas ao sistema de gestão hospitalar MV, ampliando o aproveitamento dos dados por todas as equipes.",
+    "Antes disso, atuei por cinco anos na Wing Solutions, onde participei do desenvolvimento de plataformas de e-commerce, desde o fluxo de compra e checkout até os painéis administrativos de gestão de produtos, pedidos e clientes. Também desenvolvi módulos de venda e gestão de assinaturas, com cobrança recorrente e integração a gateways de pagamento, além de APIs REST, landing pages e soluções de automação de atendimento integradas ao WhatsApp. Iniciei minha trajetória na UFPA, no desenvolvimento de sistemas para a Pró-Reitoria de Ensino de Graduação.",
   ],
 
-  // Foto: coloque o arquivo em /public (ex.: /public/foto.jpg) e troque null por "/foto.jpg"
+  // Foto em /public
   foto: "/foto.webp" as string | null,
 
   // Contato
   email: "raydesouza52@gmail.com",
   linkedin: "https://www.linkedin.com/in/raianyr1/",
-  whatsapp: "5591985166633", // deixe "" para esconder o botão
+  whatsapp: "5591985166633", // deixe "" para esconder os botões de WhatsApp
+  mensagemWhatsapp: "Olá, Raiany! Vi seu portfólio e quero conversar sobre um projeto.",
 
   // GitHub: usuário para listar os repositórios públicos automaticamente
   github: "raysouzaa",
   // Repositórios que você NÃO quer mostrar (nomes exatos)
   githubOcultar: [] as string[],
+
+  rodape: "Desenvolvido por RS Solutions – Belém, PA, Brasil",
 };
+
+export const linkWhatsapp = perfil.whatsapp
+  ? `https://wa.me/${perfil.whatsapp}?text=${encodeURIComponent(perfil.mensagemWhatsapp)}`
+  : "";
 
 export const atuacao = [
   {
     termo: "Web e mobile",
     descricao:
-      "Aplicações completas em Laravel, Node.js, React, Next.js e React Native, do banco à interface, com design system próprio.",
+      "Aplicações completas em React, Next.js, React Native, Laravel e FastAPI, do banco de dados à interface.",
   },
   {
     termo: "Banco de dados",
     descricao:
-      "Atuo como DBA em Oracle, PostgreSQL e MongoDB: consultas complexas, modelagem, acesso e manutenção.",
+      "Administro Oracle, PostgreSQL e MongoDB: modelagem, otimização de consultas, backup e manutenção.",
   },
   {
     termo: "Integração hospitalar",
     descricao:
-      "Leitura e cruzamento de dados do MV (Soul e PEP) para alimentar sistemas novos sem retrabalho da equipe assistencial.",
+      "Soluções integradas ao sistema de gestão hospitalar MV, para os dados chegarem a todas as equipes.",
   },
   {
     termo: "Infraestrutura",
-    descricao:
-      "Docker, servidores Linux, AWS, CI no Git e distribuição de apps em dispositivos da instituição.",
+    descricao: "Servidores Linux com Docker, AWS, publicação automática e rotinas de backup.",
   },
 ];
 
+// Projetos privados ficam descritos por alto, sem detalhes internos.
 export const projetos: Projeto[] = [
   {
-    slug: "passagem-de-plantao",
-    nome: "Passagem de Plantão",
+    slug: "enfermagem",
+    nome: "Sistema para enfermagem",
     contexto: "Santa Casa do Pará",
     status: "Em produção",
-    resumo: "A troca de turno da enfermagem e dos médicos, registrada e consultável.",
-    problema:
-      "A passagem de plantão dependia de papel e de conversa. As informações do paciente precisavam chegar ao próximo turno de forma completa, com o censo de leitos vindo direto do sistema hospitalar.",
+    resumo: "Apoio à rotina da equipe de enfermagem, com as informações do paciente integradas ao sistema hospitalar.",
     feito: [
-      "Migrei o sistema de AdonisJS para Laravel 12 com Inertia, React e TypeScript.",
-      "Criei módulos para enfermagem (internação e ambulatório), equipe médica e centro cirúrgico.",
-      "Escrevi as consultas Oracle do censo de leitos e guardei os formulários em MongoDB.",
-      "Montei a biblioteca de componentes que virou o padrão visual dos sistemas da GSIS.",
-      "Login integrado ao Active Directory por um serviço FastAPI, e relatórios em PDF gerados no servidor.",
+      "Telas pensadas para o ritmo do plantão",
+      "Dados do paciente vindos do MV, sem digitação duplicada",
+      "Acesso com a conta institucional",
     ],
-    stack: ["Laravel 12", "React", "TypeScript", "Inertia.js", "Oracle", "MongoDB", "FastAPI", "Docker"],
+    stack: ["React", "Tailwind", "Laravel", "Oracle"],
   },
   {
-    slug: "totem-checkin",
-    nome: "Totem de check-in",
+    slug: "banco-de-leite",
+    nome: "Sistema para o banco de leite humano",
     contexto: "Santa Casa do Pará",
-    resumo: "Autoatendimento na chegada do paciente, com pulseira impressa na hora.",
-    problema:
-      "A recepção concentrava toda a identificação dos pacientes. O totem precisava confirmar o atendimento no MV e imprimir a pulseira sem depender de um atendente.",
+    resumo: "Aplicação sob medida para a rotina do banco de leite humano do hospital.",
     feito: [
-      "Desenvolvi o front em React com Vite e a API em Laravel 11.",
-      "Integrei com o MV para localizar o atendimento do paciente.",
-      "Gerei as pulseiras em ZPL e mandei direto para impressoras Zebra.",
-      "Registrei cada etapa da jornada do paciente para acompanhamento.",
+      "Registro das rotinas do setor num só lugar",
+      "Informações centralizadas para a equipe e a gestão",
     ],
-    stack: ["React", "TypeScript", "Vite", "Laravel 11", "Oracle (MV)", "ZPL / Zebra"],
+    stack: ["React", "Tailwind", "Laravel", "PostgreSQL"],
   },
   {
-    slug: "beira-leito",
-    nome: "Aplicação beira-leito",
-    contexto: "Santa Casa do Pará",
-    status: "Em desenvolvimento",
-    resumo: "O registro diário do prontuário levado para perto do paciente.",
-    problema:
-      "Os dados do registro diário vivem no PEP do MV. Para construir uma aplicação nova à beira do leito era preciso entender essas tabelas sem documentação, só pelo banco.",
-    feito: [
-      "Mapeei as tabelas e os relacionamentos do registro diário do PEP no schema Oracle do MV.",
-      "Estou construindo o backend da aplicação em cima desse mapeamento.",
-    ],
-    stack: ["Oracle", "MV PEP", "Laravel", "React"],
-  },
-  {
-    slug: "comunicati",
-    nome: "ComunicaTI",
-    contexto: "Santa Casa do Pará",
+    slug: "glam-financas",
+    nome: "GlamFinanças",
+    contexto: "Projeto pessoal",
     status: "Em produção",
-    resumo: "Avisos da TI entregues direto nas estações de trabalho.",
-    problema:
-      "A TI precisava mandar comunicados para os computadores da instituição. A conexão original por socket TCP era frágil e difícil de manter.",
+    resumo: "Controle financeiro pessoal e familiar, no ar e aberto para qualquer pessoa criar sua conta.",
     feito: [
-      "Construí o painel administrativo em Laravel, Inertia e React.",
-      "Troquei o socket TCP por um modelo de polling HTTP entre o agente em C# e uma API FastAPI.",
-      "Guardei o histórico completo das mensagens em PostgreSQL.",
+      "Receitas, despesas, cartões e parcelamentos com painel por mês, pessoa e categoria",
+      "Cada conta com seus próprios dados, e lançamentos compartilháveis com outra pessoa",
+      "Importação de planilhas e sincronização com o Google Sheets",
+      "Publicação automática e backup diário do banco",
     ],
-    stack: ["Laravel", "React", "Inertia.js", "C# / .NET", "FastAPI", "PostgreSQL"],
+    stack: ["Laravel", "React", "Inertia.js", "PostgreSQL", "Docker"],
+    link: { rotulo: "Acessar o GlamFinanças", url: "https://glamfinancasmais.vyrasolutions.com.br" },
   },
   {
-    slug: "portal-candidato",
-    nome: "Portal do Candidato (PSS)",
-    contexto: "Santa Casa do Pará",
-    resumo: "Inscrições do processo seletivo da instituição.",
-    problema:
-      "O processo seletivo simplificado precisava de um portal próprio, publicado na infraestrutura interna.",
-    feito: [
-      "Coloquei a aplicação Laravel no ar em Oracle Linux 8 com Docker.",
-      "Resolvi a imagem base do PHP e a liberação de acesso ao PostgreSQL junto ao banco.",
-    ],
-    stack: ["Laravel", "PostgreSQL", "Docker", "Oracle Linux"],
-  },
-  {
-    slug: "coletores-android",
-    nome: "App nos coletores Android",
-    contexto: "Santa Casa do Pará",
-    resumo: "Distribuição de um app interno em coletores de dados sem loja.",
-    problema:
-      "Os coletores Seuic da instituição precisavam de um app interno que não pode ir para a Play Store, e atualizar aparelho por aparelho não escala.",
-    feito: [
-      "Avaliei um MDM próprio em servidor Linux.",
-      "Testei a atualização automática do app a partir de um APK hospedado no repositório Nexus da instituição.",
-    ],
-    stack: ["Android", "MDM", "Nexus", "Linux"],
-  },
-  {
-    slug: "plataforma-cm",
-    nome: "Plataforma CM",
-    contexto: "Contamedical",
+    slug: "contabilidade",
+    nome: "Plataforma de gestão contábil",
+    contexto: "Escritório de contabilidade",
     status: "Em desenvolvimento",
-    resumo: "Plataforma de gestão para escritórios de contabilidade médica, em duas marcas.",
-    problema:
-      "Vários projetos separados (frontend, IA e servidor) com nomes e fluxos diferentes, tudo dependente do Supabase. Era preciso unificar e ganhar controle da infraestrutura.",
+    resumo: "Sistema de gestão para um escritório de contabilidade que atende duas marcas, cada uma com sua identidade.",
     feito: [
-      "Unifiquei os repositórios num monorepo, preservando o histórico de cada um.",
-      "Montei publicação por item via CI e um ambiente de homologação igual ao de produção.",
-      "Estou migrando o backend e o frontend do Supabase para Laravel, React e PostgreSQL em servidor próprio, começando pelo Contas a Receber.",
-      "Mantenho o design system com tema por marca e modo claro e escuro.",
+      "Áreas de administração, tarefas, financeiro e comercial",
+      "Projetos unificados com publicação automática e ambiente de homologação",
+      "Migração para servidor próprio",
     ],
-    stack: ["Laravel", "React", "TypeScript", "PostgreSQL", "Supabase", "Git CI"],
+    stack: ["Laravel", "React", "TypeScript", "PostgreSQL"],
   },
   {
-    slug: "atendimento-whatsapp",
+    slug: "e-commerce",
+    nome: "Plataformas de e-commerce",
+    contexto: "Wing Solutions",
+    resumo: "Lojas virtuais para uma operadora de telefonia, do carrinho ao painel de gestão.",
+    feito: [
+      "Fluxo de compra e checkout",
+      "Painéis administrativos de produtos, pedidos e clientes",
+      "APIs REST integradas a serviços da AWS",
+    ],
+    stack: ["React", "Next.js", "Laravel", "MySQL", "AWS"],
+  },
+  {
+    slug: "assinaturas",
+    nome: "Vendas por assinatura",
+    contexto: "Wing Solutions",
+    resumo: "Venda e gestão de assinaturas com cobrança recorrente.",
+    feito: [
+      "Módulos de venda e de gestão de planos e assinantes",
+      "Cobrança recorrente integrada a gateways de pagamento",
+    ],
+    stack: ["Laravel", "React", "MySQL"],
+  },
+  {
+    slug: "whatsapp",
     nome: "Atendimento no WhatsApp",
     contexto: "Wing Solutions",
-    resumo: "Chatbots que automatizam o atendimento de empresas de telefonia e seguros.",
-    problema:
-      "Clientes de telefonia e seguros precisavam ser atendidos fora do horário comercial e sem fila, com os dados batendo com os sistemas internos das empresas.",
+    resumo: "Chatbots que automatizam o atendimento de empresas.",
     feito: [
-      "Desenvolvi chatbots e integrações com o WhatsApp para automatizar o atendimento.",
-      "Criei as APIs REST em Laravel com MySQL, integradas a serviços da AWS.",
-      "Cobri as regras de negócio com testes unitários.",
+      "Fluxos de atendimento automatizado integrados ao WhatsApp",
+      "Integração com os sistemas internos dos clientes",
     ],
-    stack: ["Laravel", "PHP 8", "MySQL", "AWS", "WhatsApp", "React"],
+    stack: ["Laravel", "Node.js", "MySQL"],
   },
   {
-    slug: "helpti",
-    nome: "HelpTI",
-    contexto: "Contamedical",
-    resumo: "Sistema de chamados de suporte de TI.",
-    problema: "Os pedidos de suporte chegavam por canais soltos, sem fila, prioridade ou histórico.",
-    feito: [
-      "Desenvolvi o sistema de abertura e acompanhamento de chamados em Laravel com Inertia e React.",
-      "Apliquei um redesign completo a partir de um protótipo próprio.",
-    ],
-    stack: ["Laravel", "Inertia.js", "React"],
-  },
-  {
-    slug: "central-de-monitoramento",
-    nome: "Central de monitoramento",
-    contexto: "Projeto próprio",
-    status: "Em desenvolvimento",
-    resumo: "Alertas em tempo real sobre a operação de um hospital.",
-    problema:
-      "Gestores precisam saber de gargalos e riscos na hora em que acontecem, e não no relatório do dia seguinte.",
-    feito: [
-      "Estou desenhando o fluxo de notificações com dados fictícios.",
-      "A arquitetura está pronta para receber os dados reais do sistema hospitalar depois.",
-    ],
-    stack: ["React", "TypeScript", "Laravel", "PostgreSQL"],
+    slug: "chatbot-opme",
+    nome: "Chatbot de OPME",
+    contexto: "Área da saúde",
+    resumo: "Assistente com inteligência artificial para agilizar os processos de órteses, próteses e materiais especiais.",
+    feito: ["Respostas rápidas para as dúvidas mais comuns do processo"],
+    stack: ["IA generativa"],
   },
 ];
 
 export const trajetoria: Experiencia[] = [
   {
-    periodo: "Abr 2024 – atual",
-    titulo: "Desenvolvedora full stack",
-    lugar: "Fundação Santa Casa de Misericórdia do Pará (Montreal)",
-    descricao: "Sistemas web e mobile para a saúde, da API ao banco de dados.",
+    periodo: "2025 – atual",
+    titulo: "Desenvolvedora full stack e DBA",
+    lugar: "Fundação Santa Casa de Misericórdia do Pará",
+    descricao:
+      "Aplicações para enfermagem, corpo clínico, farmácia, financeiro e banco de leite humano, integradas ao sistema de gestão hospitalar MV.",
     destaques: [
-      "Soluções para enfermagem, financeiro, farmácia e banco de leite",
-      "APIs em Laravel, Node.js e FastAPI sobre Oracle, PostgreSQL e MongoDB",
-      "Interfaces em React, Next.js e React Native",
-      "Ambientes e deploy com Docker",
+      "Stack React, Tailwind, Laravel e FastAPI",
+      "Administração de Oracle, PostgreSQL e MongoDB",
+      "Servidores Linux com Docker",
     ],
   },
   {
-    periodo: "Jan 2021 – Fev 2026",
+    periodo: "2026", // ano em que começou a prestação de serviços
+    titulo: "Desenvolvimento de sistemas (prestação de serviços)",
+    lugar: "Escritório de contabilidade",
+    descricao: "Plataforma de gestão do escritório e migração da infraestrutura para servidor próprio.",
+  },
+  {
+    periodo: "2021 – 2026",
     titulo: "Desenvolvedora full stack",
     lugar: "Wing Solutions",
-    descricao: "Sistemas para empresas de telefonia e seguros.",
+    descricao: "E-commerce, vendas por assinatura e automação de atendimento.",
     destaques: [
-      "APIs REST em Laravel e MySQL integradas à AWS",
-      "Chatbots e integrações com WhatsApp",
-      "Landing pages em React, Next.js e Vite",
-      "Testes unitários das regras de negócio",
+      "Fluxo de compra, checkout e painéis de produtos, pedidos e clientes",
+      "Assinaturas com cobrança recorrente e gateways de pagamento",
+      "APIs REST, landing pages e chatbots de WhatsApp",
     ],
   },
   {
-    periodo: "Out 2018 – Jan 2021",
+    periodo: "2018 – 2021",
     titulo: "Estágio em desenvolvimento web full stack",
-    lugar: "COTIC, Pró-reitoria de Ensino de Graduação, UFPA",
+    lugar: "UFPA, Pró-Reitoria de Ensino de Graduação",
     descricao: "Sistemas internos para automatizar processos administrativos da pró-reitoria.",
-    destaques: [
-      "Laravel, MySQL e Vue.js",
-      "Testes end-to-end com Cypress",
-      "Página institucional da COTIC",
-      "Suporte em Windows, Linux e rede de dados",
-    ],
+    destaques: ["Laravel, MySQL e Vue.js", "Testes end-to-end com Cypress", "Página institucional da COTIC"],
   },
   {
-    periodo: "Dez 2019 – Mar 2020",
+    periodo: "2019 – 2020",
     titulo: "Estágio em desenvolvimento back-end",
     lugar: "Navtech Solutions",
     descricao: "API REST em PHP para um aplicativo mobile.",
@@ -297,9 +254,9 @@ export const ferramentas = [
     grupo: "Interface",
     itens: ["React", "Next.js", "React Native", "TypeScript", "Tailwind CSS", "Inertia.js", "Material UI", "Sass"],
   },
-  { grupo: "Servidor", itens: ["Laravel (PHP 8)", "Node.js", "FastAPI (Python)", "APIs REST", "C# / .NET"] },
-  { grupo: "Dados", itens: ["Oracle", "PostgreSQL", "MongoDB", "MySQL", "Supabase"] },
-  { grupo: "Infra", itens: ["Docker", "Linux", "AWS", "Git CI", "Cloudflare Tunnel"] },
+  { grupo: "Servidor", itens: ["Laravel (PHP 8)", "Node.js", "FastAPI (Python)", "APIs REST"] },
+  { grupo: "Dados", itens: ["Oracle", "PostgreSQL", "MongoDB", "MySQL"] },
+  { grupo: "Infra", itens: ["Docker", "Linux", "AWS", "Caddy", "GitHub Actions"] },
   { grupo: "Qualidade", itens: ["Testes unitários", "Cypress (E2E)", "Clean Code e SOLID", "Scrum e Kanban"] },
-  { grupo: "Integrações", itens: ["MV Soul e PEP", "Active Directory", "Impressoras Zebra (ZPL)", "WhatsApp"] },
+  { grupo: "Integrações", itens: ["Sistema hospitalar MV", "Gateways de pagamento", "WhatsApp", "Google Sheets"] },
 ];

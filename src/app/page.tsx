@@ -6,7 +6,17 @@ import Projetos from "@/components/Projetos";
 import Repositorios from "@/components/Repositorios";
 import CopiarEmail from "@/components/CopiarEmail";
 import Grafismo from "@/components/Grafismo";
-import { atuacao, conquistas, ferramentas, formacao, perfil, trajetoria, type Experiencia } from "@/content/perfil";
+import BotaoFlutuante from "@/components/BotaoFlutuante";
+import {
+  atuacao,
+  conquistas,
+  ferramentas,
+  formacao,
+  linkWhatsapp,
+  perfil,
+  trajetoria,
+  type Experiencia,
+} from "@/content/perfil";
 
 function Secao({
   id,
@@ -92,7 +102,7 @@ export default function Home() {
             </figure>
 
             <div>
-              <div className="space-y-5 text-xl leading-relaxed text-nevoa/90">
+              <div className="space-y-5 text-lg leading-relaxed text-nevoa/90 sm:text-xl">
                 {perfil.sobre.map((p) => (
                   <p key={p.slice(0, 24)} className="max-w-[38rem]">
                     {p}
@@ -114,7 +124,7 @@ export default function Home() {
         <Secao
           id="projetos"
           titulo="Projetos"
-          intro="Boa parte do que construo roda dentro de um hospital, então o código não é público. Aqui está o problema, o que eu fiz e com quais ferramentas."
+          intro="Sistemas para hospital, escritório, e-commerce e projetos próprios. Os privados aparecem aqui por alto, sem expor nada de quem confiou o trabalho a mim."
         >
           <Projetos />
         </Secao>
@@ -170,36 +180,54 @@ export default function Home() {
 
         <section id="contato" aria-labelledby="contato-titulo" className="bg-mata px-6 py-28 sm:px-10 md:py-40">
           <div className="mx-auto max-w-6xl">
-            <h2 id="contato-titulo" className="secao-titulo max-w-4xl text-5xl text-nevoa sm:text-7xl">
-              Tem um sistema que precisa conversar com outro?
+            <h2 id="contato-titulo" className="secao-titulo max-w-4xl text-5xl text-nevoa sm:text-7xl md:text-8xl">
+              Vamos tirar o seu sistema do papel?
             </h2>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-nevoa/80">
-              Atendo projetos de desenvolvimento, integração de sistemas e gestão de TI. Conte o que você precisa por e-mail.
+            <p className="mt-8 max-w-2xl text-xl leading-relaxed text-nevoa/85">
+              Da ideia ao servidor: desenvolvo sistemas web, integrações e automações sob medida para hospitais,
+              clínicas, escritórios e lojas. Me conte o que você precisa.
             </p>
-            <a
-              href={`mailto:${perfil.email}`}
-              className="mt-12 inline-block break-all text-[clamp(1.6rem,5vw,3.5rem)] font-bold text-sedimento-claro underline decoration-sedimento/40 decoration-2 underline-offset-[0.2em] transition-colors hover:decoration-sedimento-claro"
-              style={{ fontStretch: "85%" }}
-            >
-              {perfil.email}
-            </a>
-            <div className="mt-10 flex flex-wrap items-center gap-3">
-              <CopiarEmail email={perfil.email} />
-              {perfil.linkedin && (
-                <a href={perfil.linkedin} target="_blank" rel="noreferrer" className="rounded-full border border-nevoa/25 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-nevoa hover:bg-nevoa/5">
-                  LinkedIn
+
+            <div className="mt-12 flex flex-wrap items-center gap-4">
+              {linkWhatsapp && (
+                <a
+                  href={linkWhatsapp}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full bg-sedimento px-8 py-4 text-lg font-semibold text-rio transition-colors hover:bg-sedimento-claro"
+                >
+                  Conversar no WhatsApp
                 </a>
               )}
-              {perfil.github && (
-                <a href={`https://github.com/${perfil.github}`} target="_blank" rel="noreferrer" className="rounded-full border border-nevoa/25 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-nevoa hover:bg-nevoa/5">
-                  GitHub
-                </a>
-              )}
-              {perfil.whatsapp && (
-                <a href={`https://wa.me/${perfil.whatsapp}`} target="_blank" rel="noreferrer" className="rounded-full border border-nevoa/25 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-nevoa hover:bg-nevoa/5">
-                  WhatsApp
-                </a>
-              )}
+              <a
+                href={`mailto:${perfil.email}`}
+                className="rounded-full border border-nevoa/30 px-8 py-4 text-lg font-semibold text-nevoa transition-colors hover:border-nevoa hover:bg-nevoa/5"
+              >
+                Enviar e-mail
+              </a>
+            </div>
+
+            <div className="mt-16 flex flex-col gap-6 border-t border-nevoa/15 pt-8 sm:flex-row sm:items-center sm:justify-between">
+              <a
+                href={`mailto:${perfil.email}`}
+                className="break-all text-2xl font-bold text-sedimento-claro underline decoration-sedimento/40 decoration-2 underline-offset-[0.2em] transition-colors hover:decoration-sedimento-claro sm:text-3xl"
+                style={{ fontStretch: "85%" }}
+              >
+                {perfil.email}
+              </a>
+              <div className="flex flex-wrap items-center gap-3">
+                <CopiarEmail email={perfil.email} />
+                {perfil.linkedin && (
+                  <a href={perfil.linkedin} target="_blank" rel="noreferrer" className="rounded-full border border-nevoa/25 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-nevoa hover:bg-nevoa/5">
+                    LinkedIn
+                  </a>
+                )}
+                {perfil.github && (
+                  <a href={`https://github.com/${perfil.github}`} target="_blank" rel="noreferrer" className="rounded-full border border-nevoa/25 px-5 py-2.5 text-sm font-semibold transition-colors hover:border-nevoa hover:bg-nevoa/5">
+                    GitHub
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </section>
@@ -209,9 +237,10 @@ export default function Home() {
         <Grafismo className="block text-sedimento/35" />
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-10 text-sm text-musgo sm:flex-row sm:justify-between sm:px-10">
           <p>{perfil.nomeCompleto}</p>
-          <p>Feito em Belém do Pará</p>
+          <p>{perfil.rodape}</p>
         </div>
       </footer>
+      <BotaoFlutuante />
     </>
   );
 }
