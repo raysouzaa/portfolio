@@ -22,31 +22,7 @@ npm run dev
 
 ## Publicar no servidor
 
-Mesmo esquema do glam-financas-mais: o site escuta só em `127.0.0.1:3010` e o Caddy do servidor cuida do domínio e do HTTPS.
-Produção: `https://portifolio.vyrasolutions.com.br`, na pasta `/var/www/html/portifolio`.
-
-1. **DNS:** crie um registro A `portifolio` apontando para o IP do servidor (igual ao `glamfinancasmais`).
-2. **Código e contêiner:**
-   ```bash
-   sudo mkdir -p /var/www/html/portifolio && sudo chown "$USER" /var/www/html/portifolio
-   git clone https://github.com/raysouzaa/portifolio.git /var/www/html/portifolio
-   cd /var/www/html/portifolio
-   docker compose up -d --build
-   curl -I http://127.0.0.1:3010
-   ```
-3. **Caddy:** acrescente ao `/etc/caddy/Caddyfile`
-   ```
-   portifolio.vyrasolutions.com.br {
-       encode gzip zstd
-       reverse_proxy 127.0.0.1:3010
-   }
-   ```
-   e rode `sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy`.
-
-**Atualizar depois:** `cd /var/www/html/portifolio && git pull && docker compose up -d --build`.
-
-Opcional: defina `GITHUB_TOKEN` (um token sem nenhuma permissão já basta) num arquivo `.env` ao lado do `docker-compose.yml`
-para não esbarrar no limite de 60 requisições/hora da API do GitHub.
+Passo a passo completo em [DEPLOY.md](DEPLOY.md): DNS, Caddy, deploy automático a cada push no `main` e atualização manual (`scripts/deploy.sh`).
 
 ### Sem Docker
 
