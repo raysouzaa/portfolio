@@ -28,12 +28,12 @@ export const perfil = {
   // Nome grande do topo do site (cada palavra vira uma linha)
   nome: "Raiany Souza",
   nomeCompleto: "Raiany Souza",
-  titulo: "Desenvolvedora full stack",
+  titulo: "Desenvolvedora full stack e DBA",
   cidade: "Belém do Pará",
   coordenadas: "1°27′ S, 48°30′ W",
 
   chamada:
-    "Desenvolvo sistemas para a área da saúde e faço eles conversarem entre si: do banco Oracle do MV até a tela à beira do leito.",
+    "Há mais de 7 anos transformo processos complexos em sistemas simples de usar, para hospitais, escritórios e negócios, do banco de dados à tela.",
 
   sobre: [
     "Sou desenvolvedora full stack com mais de 7 anos de experiência. Atualmente, atuo na Fundação Santa Casa de Misericórdia do Pará, onde desenvolvo aplicações para as áreas de enfermagem, corpo clínico, farmácia, financeiro e banco de leite humano, com stack React, Tailwind, Laravel e FastAPI. Também atuo como DBA, administrando ambientes Oracle, PostgreSQL e MongoDB: modelagem, otimização de consultas, rotinas de backup e manutenção dos servidores Linux com Docker onde os serviços rodam.",
@@ -203,7 +203,7 @@ export const trajetoria: Experiencia[] = [
   },
   {
     periodo: "2021 – 2026",
-    titulo: "Desenvolvedora full stack",
+    titulo: "Desenvolvedora full stack e DBA",
     lugar: "Wing Solutions",
     descricao: "E-commerce, vendas por assinatura e automação de atendimento.",
     destaques: [
