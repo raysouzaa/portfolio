@@ -36,7 +36,7 @@ export const perfil = {
     "Há mais de 7 anos transformo processos complexos em sistemas simples de usar, para hospitais, escritórios e negócios, do banco de dados à tela.",
 
   sobre: [
-    "Sou desenvolvedora full stack com mais de 7 anos de experiência. Atualmente, atuo na Fundação Santa Casa de Misericórdia do Pará, onde desenvolvo soluções para o sistema de gestão hospitalar, atendendo às áreas assistenciais e administrativas, com stack React, Tailwind, Laravel e FastAPI. Também atuo como DBA, administrando ambientes Oracle, PostgreSQL e MongoDB: modelagem, otimização de consultas, rotinas de backup e manutenção dos servidores Linux com Docker onde os serviços rodam.",
+    "Sou desenvolvedora full stack com mais de 7 anos de experiência. Atualmente, atuo na Fundação Santa Casa de Misericórdia do Pará, onde desenvolvo sistemas assistenciais e de gestão hospitalar, com stack React, Tailwind, Laravel e FastAPI. Também atuo como DBA, administrando ambientes Oracle, PostgreSQL e MongoDB: modelagem, otimização de consultas, rotinas de backup e manutenção dos servidores Linux com Docker onde os serviços rodam.",
     "Meu foco é o desenvolvimento de soluções que otimizam os fluxos assistenciais e administrativos, integradas ao sistema de gestão hospitalar MV, ampliando o aproveitamento dos dados por todas as equipes.",
     "Antes disso, atuei por cinco anos na Wing Solutions, onde participei do desenvolvimento de plataformas de e-commerce, desde o fluxo de compra e checkout até os painéis administrativos de gestão de produtos, pedidos e clientes. Também desenvolvi módulos de venda e gestão de assinaturas, com cobrança recorrente e integração a gateways de pagamento, além de APIs REST, landing pages e soluções de automação de atendimento integradas ao WhatsApp. Iniciei minha trajetória na UFPA, no desenvolvimento de sistemas para a Pró-Reitoria de Ensino de Graduação.",
   ],
@@ -118,17 +118,30 @@ export const atuacao = [
 // Projetos privados ficam descritos por alto, sem detalhes internos.
 export const projetos: Projeto[] = [
   {
+    slug: "sistemas-assistenciais",
+    nome: "Sistemas assistenciais",
+    contexto: "Santa Casa do Pará",
+    status: "Em produção",
+    resumo: "Aplicações que apoiam o cuidado ao paciente e a rotina das equipes assistenciais do hospital.",
+    feito: [
+      "Telas pensadas para a rotina de quem atende o paciente",
+      "Informações do paciente vindas do sistema hospitalar, sem digitação duplicada",
+      "Uso no computador e em dispositivos da instituição",
+    ],
+    stack: ["React", "Tailwind", "Laravel", "Oracle"],
+  },
+  {
     slug: "gestao-hospitalar",
     nome: "Sistemas de gestão hospitalar",
     contexto: "Santa Casa do Pará",
     status: "Em produção",
-    resumo: "Aplicações web que apoiam a rotina assistencial e administrativa de um hospital, integradas ao sistema de gestão hospitalar.",
+    resumo: "Soluções para as áreas administrativas e de gestão do hospital, integradas ao sistema de gestão hospitalar.",
     feito: [
-      "Telas pensadas para a rotina de quem atende o paciente",
-      "Dados integrados ao sistema de gestão hospitalar, sem digitação duplicada",
+      "Processos administrativos automatizados e dados centralizados",
+      "Consultas e integrações com o sistema hospitalar",
       "Bancos de dados, APIs e publicação em servidores próprios",
     ],
-    stack: ["React", "Tailwind", "Laravel", "FastAPI", "Oracle", "PostgreSQL"],
+    stack: ["Laravel", "FastAPI", "React", "PostgreSQL", "Oracle"],
   },
   {
     slug: "glam-financas",
@@ -195,7 +208,7 @@ export const trajetoria: Experiencia[] = [
     titulo: "Desenvolvedora full stack e DBA",
     lugar: "Fundação Santa Casa de Misericórdia do Pará",
     descricao:
-      "Soluções para o sistema de gestão hospitalar, nas áreas assistenciais e administrativas, integradas ao MV.",
+      "Sistemas assistenciais e de gestão hospitalar, integrados ao MV.",
     destaques: [
       "Stack React, Tailwind, Laravel e FastAPI",
       "Administração de Oracle, PostgreSQL e MongoDB",
