@@ -193,11 +193,11 @@ export const projetos: Projeto[] = [
     stack: ["Laravel", "Node.js", "MySQL"],
   },
   {
-    slug: "chatbot-opme",
-    nome: "Chatbot de OPME",
+    slug: "assistente-ia-saude",
+    nome: "Assistente com IA",
     contexto: "Área da saúde",
-    resumo: "Assistente com inteligência artificial para agilizar os processos de órteses, próteses e materiais especiais.",
-    feito: ["Respostas rápidas para as dúvidas mais comuns do processo"],
+    resumo: "Assistente com inteligência artificial para agilizar processos hospitalares.",
+    feito: ["Respostas rápidas para as dúvidas mais comuns das equipes"],
     stack: ["IA generativa"],
   },
 ];
