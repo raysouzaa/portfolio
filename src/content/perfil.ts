@@ -156,7 +156,7 @@ export const projetos: Projeto[] = [
       "Publicação automática e backup diário do banco",
     ],
     stack: ["Laravel", "React", "Inertia.js", "PostgreSQL", "Docker"],
-    link: { rotulo: "Acessar o GlamFinanças", url: "https://glamfinancasmais.vyrasolutions.com.br" },
+    link: { rotulo: "Acessar o GlamFinanças", url: "https://glamfinancas.com.br" },
   },
   {
     slug: "e-commerce",
